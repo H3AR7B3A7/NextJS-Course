@@ -162,6 +162,47 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 ```
 
 
+## Navigation
+
+In Next.js, you can use the <Link /> Component to link between pages in your application.
+<Link> allows you to do client-side navigation with JavaScript.
+
+``` tsx
+import Link from 'next/link';
+
+// ...
+
+<Link
+  key={link.name}
+  href={link.href}
+  className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+>
+  <LinkIcon className="w-6" />
+  <p className="hidden md:block">{link.name}</p>
+</Link>
+```
+
+### Active Link
+
+Since `usePathname()` is a hook, you'll need to turn nav-links.tsx into a Client Component.
+
+_nav-links.tsx:_
+
+``` tsx
+'use client';
+
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
+
+export default function NavLinks() {
+  const pathname = usePathname();
+  // ...
+}
+```
+
+You can use the clsx library to conditionally apply class names.
+
+
 ## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
@@ -174,6 +215,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   - Why not just partially rerender components, do you really need a layout for that?
   - If something doesn't need re-rendering just define it in the parent
   - A layout just looks like an unnecessary component between parent and child components to me
+- Having to declare components as being used by the client when using hooks seems like something that could be derived
+  - The console seems to know what is going on pretty well, so why doesn't the app?
 - 
 
 ---
