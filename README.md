@@ -172,6 +172,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   - What goes where, it's all pretty confusing to me
   - This doesn't make it easier to find the code that needs changes at all
   - Why not just partially rerender components, do you really need a layout for that?
+  - If something doesn't need re-rendering just define it in the parent
+  - A layout just looks like an unnecessary component between parent and child components to me
 - 
 
 ---
