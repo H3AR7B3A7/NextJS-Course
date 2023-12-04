@@ -202,6 +202,23 @@ export default function NavLinks() {
 
 You can use the clsx library to conditionally apply class names.
 
+## Fetching Data
+
+Page is an async component. This allows you to use await to fetch data.
+
+```tsx
+import { fetchRevenue } from '@/app/lib/data';
+
+export default async function Page() {
+  const revenue = await fetchRevenue();
+  return (
+    <main>
+      <RevenueChart revenue={revenue} />
+    </main>
+  );
+}
+```
+
 ## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
@@ -216,7 +233,6 @@ You can use the clsx library to conditionally apply class names.
   - A layout just looks like an unnecessary component between parent and child components to me
 - Having to declare components as being used by the client when using hooks seems like something that could be derived
   - The console seems to know what is going on pretty well, so why doesn't the app?
--
 
 ---
 
