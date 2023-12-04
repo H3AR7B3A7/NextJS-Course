@@ -22,7 +22,7 @@ npm run dev
 
 ### Import Global Styles
 
-``` tsx
+```tsx
 import '@/app/ui/global.css';
 ```
 
@@ -30,7 +30,7 @@ import '@/app/ui/global.css';
 
 _home.module.css:_
 
-``` css
+```css
 .shape {
   height: 0;
   width: 0;
@@ -40,9 +40,9 @@ _home.module.css:_
 }
 ```
 
-``` tsx
+```tsx
 import styles from '@/app/ui/home.module.css';
- 
+
 //...
 <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
     <div className={styles.shape}></div>;
@@ -51,9 +51,9 @@ import styles from '@/app/ui/home.module.css';
 
 ### CLSX: Conditional Styling
 
-``` tsx
+```tsx
 import clsx from 'clsx';
- 
+
 export default function InvoiceStatus({ status }: { status: string }) {
   return (
     <span
@@ -75,18 +75,18 @@ export default function InvoiceStatus({ status }: { status: string }) {
 
 _fonts.ts:_
 
-``` ts
+```ts
 import { Inter } from 'next/font/google';
- 
+
 export const inter = Inter({ subsets: ['latin'] });
 ```
 
 _layout.tsx:_
 
-``` tsx
+```tsx
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
- 
+
 export default function RootLayout({
   children,
 }: {
@@ -104,9 +104,9 @@ export default function RootLayout({
 
 _page.tsx:_
 
-``` tsx
+```tsx
 import Image from 'next/image';
- 
+
 export default function Page() {
   return (
     // ...
@@ -134,7 +134,7 @@ this is the home page associated with the route /.
 
 _/app/dashboard/page.tsx:_
 
-``` tsx
+```tsx
 export default function Page() {
   return <p>Dashboard Page</p>;
 }
@@ -146,9 +146,9 @@ This is called partial rendering.
 
 _/app/dashboard/layout.tsx:_
 
-``` tsx
+```tsx
 import SideNav from '@/app/ui/dashboard/sidenav';
- 
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
@@ -161,13 +161,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 ```
 
-
 ## Navigation
 
 In Next.js, you can use the <Link /> Component to link between pages in your application.
+
 <Link> allows you to do client-side navigation with JavaScript.
 
-``` tsx
+```tsx
 import Link from 'next/link';
 
 // ...
@@ -179,7 +179,7 @@ import Link from 'next/link';
 >
   <LinkIcon className="w-6" />
   <p className="hidden md:block">{link.name}</p>
-</Link>
+</Link>;
 ```
 
 ### Active Link
@@ -188,7 +188,7 @@ Since `usePathname()` is a hook, you'll need to turn nav-links.tsx into a Client
 
 _nav-links.tsx:_
 
-``` tsx
+```tsx
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -201,7 +201,6 @@ export default function NavLinks() {
 ```
 
 You can use the clsx library to conditionally apply class names.
-
 
 ## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
 
@@ -217,7 +216,7 @@ You can use the clsx library to conditionally apply class names.
   - A layout just looks like an unnecessary component between parent and child components to me
 - Having to declare components as being used by the client when using hooks seems like something that could be derived
   - The console seems to know what is going on pretty well, so why doesn't the app?
-- 
+-
 
 ---
 
