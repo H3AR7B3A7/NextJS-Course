@@ -125,6 +125,55 @@ export default function Page() {
 }
 ```
 
+## Pages & Layouts
+
+page.tsx is a special Next.js file that exports a React component,
+and it's required for the route to be accessible.
+In your application, you already have a page file: /app/page.tsx -
+this is the home page associated with the route /.
+
+_/app/dashboard/page.tsx:_
+
+``` tsx
+export default function Page() {
+  return <p>Dashboard Page</p>;
+}
+```
+
+One benefit of using layouts in Next.js is that on navigation,
+only the page components update while the layout won't re-render.
+This is called partial rendering.
+
+_/app/dashboard/layout.tsx:_
+
+``` tsx
+import SideNav from '@/app/ui/dashboard/sidenav';
+ 
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <div className="w-full flex-none md:w-64">
+        <SideNav />
+      </div>
+      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+    </div>
+  );
+}
+```
+
+
+## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
+
+- TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
+  - In my opinion html itself and aria rules for accessibility are plenty of complexity for a template file
+- All pages are called page.tsx, this is pretty annoying navigating to specific page files
+- All the page route folders make for a lot of nesting when there are a lot of subroutes
+- What's the point of splitting layout and page, what is a page/template if not your layout
+  - What goes where, it's all pretty confusing to me
+  - This doesn't make it easier to find the code that needs changes at all
+  - Why not just partially rerender components, do you really need a layout for that?
+- 
+
 ---
 
 &copy; H3AR7B3A7, December 2023
