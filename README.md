@@ -234,6 +234,7 @@ export default async function Page() {
 - Having to declare components as being used by the client when using hooks seems like something that could be derived
   - The console seems to know what is going on pretty well, so why doesn't the app?
 
+
 ---
 
 &copy; H3AR7B3A7, December 2023
