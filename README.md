@@ -65,8 +65,10 @@ export default function InvoiceStatus({ status }: { status: string }) {
         },
       )}
     >
-    // ...
-)}
+      // ...
+    </span>
+  );
+}
 ```
 
 ## Optimize Fonts & Images
@@ -233,7 +235,6 @@ export default async function Page() {
   - A layout just looks like an unnecessary component between parent and child components to me
 - Having to declare components as being used by the client when using hooks seems like something that could be derived
   - The console seems to know what is going on pretty well, so why doesn't the app?
-
 
 ---
 
