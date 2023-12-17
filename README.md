@@ -33,11 +33,11 @@ _home.module.css:_
 
 ```css
 .shape {
-    height: 0;
-    width: 0;
-    border-bottom: 30px solid black;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
+  height: 0;
+  width: 0;
+  border-bottom: 30px solid black;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
 }
 ```
 
@@ -56,7 +56,7 @@ import styles from '@/app/ui/home.module.css';
 ```tsx
 import clsx from 'clsx';
 
-export default function InvoiceStatus({status}: { status: string }) {
+export default function InvoiceStatus({ status }: { status: string }) {
   return (
     <span
       className={clsx(
@@ -79,26 +79,26 @@ export default function InvoiceStatus({status}: { status: string }) {
 
 _fonts.ts:_
 
-```ts
-import {Inter} from 'next/font/google';
+```typescript
+import { Inter } from 'next/font/google';
 
-export const inter = Inter({subsets: ['latin']});
+export const inter = Inter({ subsets: ['latin'] });
 ```
 
 _layout.tsx:_
 
 ```tsx
 import '@/app/ui/global.css';
-import {inter} from '@/app/ui/fonts';
+import { inter } from '@/app/ui/fonts';
 
 export default function RootLayout({
-                                     children,
-                                   }: {
+  children,
+}: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-    <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   );
 }
@@ -153,11 +153,11 @@ _/app/dashboard/layout.tsx:_
 ```tsx
 import SideNav from '@/app/ui/dashboard/sidenav';
 
-export default function Layout({children}: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
       <div className="w-full flex-none md:w-64">
-        <SideNav/>
+        <SideNav />
       </div>
       <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
     </div>
@@ -181,7 +181,7 @@ import Link from 'next/link';
   href={link.href}
   className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
 >
-  <LinkIcon className="w-6"/>
+  <LinkIcon className="w-6" />
   <p className="hidden md:block">{link.name}</p>
 </Link>;
 ```
@@ -195,7 +195,7 @@ _nav-links.tsx:_
 ```tsx
 'use client';
 
-import {usePathname} from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 export default function NavLinks() {
@@ -211,13 +211,13 @@ You can use the clsx library to conditionally apply class names.
 Page is an async component. This allows you to use await to fetch data.
 
 ```tsx
-import {fetchRevenue} from '@/app/lib/data';
+import { fetchRevenue } from '@/app/lib/data';
 
 export default async function Page() {
   const revenue = await fetchRevenue();
   return (
     <main>
-      <RevenueChart revenue={revenue}/>
+      <RevenueChart revenue={revenue} />
     </main>
   );
 }
@@ -255,29 +255,66 @@ such as cookies or the URL search parameters.
 
 You can use a Next.js API called unstable_noStore inside your Server Components or data fetching functions to opt out of static rendering.
 
-``` typescript
+```typescript
 import { unstable_noStore as noStore } from 'next/cache';
- 
+
 export async function fetchRevenue() {
   noStore();
   // ...
 }
 ```
 
+## Streaming
+
+There are two ways you implement streaming in Next.js:
+
+- At the page level, with the `loading.tsx` file.
+- For specific components, with `<Suspense>`.
+
+### Loading.tsx
+
+- `loading.tsx` is a special Next.js file built on top of Suspense, it allows you to create fallback UI to show as a replacement while page content loads.
+- Since `<Sidebar>` is static, so it's shown immediately. The user can interact with `<Sidebar>` while the dynamic content is loading.
+- The user doesn't have to wait for the page to finish loading before navigating away (this is called interruptable navigation).
+
+```typescript
+export default function Loading() {
+  return <div>Loading...</div>;
+}
+```
+
+Since `loading.tsx` is a level higher than `/invoices/page.tsx` and `/customers/page.tsx` in the file system, it's also applied to those pages.
+
+We can change this with Route Groups. Create a new folder called `/(overview)` inside the dashboard folder. Then, move your `loading.tsx` and `page.tsx` files inside the folder:
+
+Route groups allow you to organize files into logical groups without affecting the URL path structure. When you create a new folder using parentheses `()`, the name won't be included in the URL path. So `/dashboard/(overview)/page.tsx` becomes `/dashboard`.
+
+### Suspense
+
+Suspense allows you to defer rendering parts of your application until some condition is met (e.g. data is loaded). You can wrap your dynamic components in Suspense. Then, pass it a fallback component to show while the dynamic component loads.
+
+To do so, you'll need to move the data fetch to the component.
+
+```tsx
+<Suspense fallback={<RevenueChartSkeleton />}>
+  <RevenueChart />
+</Suspense>
+```
+
 ## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
-    - In my opinion html itself and aria rules for accessibility are plenty of complexity for a template file
+  - In my opinion html itself and aria rules for accessibility are plenty of complexity for a template file
 - All pages are called page.tsx, this is pretty annoying navigating to specific page files
 - All the page route folders make for a lot of nesting when there are a lot of subroutes
 - What's the point of splitting layout and page, what is a page/template if not your layout
-    - What goes where, it's all pretty confusing to me
-    - This doesn't make it easier to find the code that needs changes at all
-    - Why not just partially rerender components, do you really need a layout for that?
-    - If something doesn't need re-rendering just define it in the parent
-    - A layout just looks like an unnecessary component between parent and child components to me
+  - What goes where, it's all pretty confusing to me
+  - This doesn't make it easier to find the code that needs changes at all
+  - Why not just partially rerender components, do you really need a layout for that?
+  - If something doesn't need re-rendering just define it in the parent
+  - A layout just looks like an unnecessary component between parent and child components to me
 - Having to declare components as being used by the client when using hooks seems like something that could be derived
-    - The console seems to know what is going on pretty well, so why doesn't the app?
+  - The console seems to know what is going on pretty well, so why doesn't the app?
 
 ---
 
