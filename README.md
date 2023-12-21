@@ -301,6 +301,20 @@ To do so, you'll need to move the data fetch to the component.
 </Suspense>
 ```
 
+## Partial Prerendering
+
+In Next.js 14, there is a preview of a new rendering model called Partial Prerendering. Partial Prerendering is an experimental feature that allows you to render a route with a static loading shell, while keeping some parts dynamic. In other words, you can isolate the dynamic parts of a route.
+
+When a user visits a route:
+
+- A static route shell is served, this makes the initial load fast.
+- The shell leaves holes where dynamic content will load in async.
+- The async holes are loaded in parallel, reducing the overall load time of the page.
+
+The great thing about Partial Prerendering is that you don't need to change your code to use it. As long as you're using Suspense to wrap the dynamic parts of your route, Next.js will know which parts of your route are static and which are dynamic.
+
+Note: To learn more about how Partial Prerendering can be configured, see the [Partial Prerendering (experimental) documentation](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering) or try the [Partial Prerendering template and demo](https://vercel.com/templates/next.js/partial-prerendering-nextjs). It's important to note that this feature is experimental and not yet ready for production deployment.
+
 ## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
