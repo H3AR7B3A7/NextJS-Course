@@ -229,11 +229,11 @@ With static rendering, data fetching and rendering happens on the server at buil
 revalidation.
 The result can then be distributed and cached in a Content Delivery Network (CDN).
 
-- Faster Websites - Prerendered content can be cached and globally distributed. This ensures that users around the world
+- Faster Websites - Pre-rendered content can be cached and globally distributed. This ensures that users around the world
   can access your website's content more quickly and reliably.
 - Reduced Server Load - Because the content is cached, your server does not have to dynamically generate content for
   each user request.
-- SEO - Prerendered content is easier for search engine crawlers to index, as the content is already available when the
+- SEO - Pre-rendered content is easier for search engine crawlers to index, as the content is already available when the
   page loads. This can lead to improved search engine rankings.
 
 Static rendering is useful for UI with no data or data that is shared across users, such as a static blog post or a
@@ -277,7 +277,7 @@ There are two ways you implement streaming in Next.js:
 - Since `<Sidebar>` is static, so it's shown immediately. The user can interact with `<Sidebar>` while the dynamic content is loading.
 - The user doesn't have to wait for the page to finish loading before navigating away (this is called interruptable navigation).
 
-```typescript
+```tsx
 export default function Loading() {
   return <div>Loading...</div>;
 }
@@ -301,9 +301,9 @@ To do so, you'll need to move the data fetch to the component.
 </Suspense>
 ```
 
-## Partial Prerendering
+## Partial Pre-rendering
 
-In Next.js 14, there is a preview of a new rendering model called Partial Prerendering. Partial Prerendering is an experimental feature that allows you to render a route with a static loading shell, while keeping some parts dynamic. In other words, you can isolate the dynamic parts of a route.
+In Next.js 14, there is a preview of a new rendering model called Partial Pre-rendering. Partial Pre-rendering is an experimental feature that allows you to render a route with a static loading shell, while keeping some parts dynamic. In other words, you can isolate the dynamic parts of a route.
 
 When a user visits a route:
 
@@ -311,9 +311,9 @@ When a user visits a route:
 - The shell leaves holes where dynamic content will load in async.
 - The async holes are loaded in parallel, reducing the overall load time of the page.
 
-The great thing about Partial Prerendering is that you don't need to change your code to use it. As long as you're using Suspense to wrap the dynamic parts of your route, Next.js will know which parts of your route are static and which are dynamic.
+The great thing about Partial Pre-rendering is that you don't need to change your code to use it. As long as you're using Suspense to wrap the dynamic parts of your route, Next.js will know which parts of your route are static and which are dynamic.
 
-Note: To learn more about how Partial Prerendering can be configured, see the [Partial Prerendering (experimental) documentation](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering) or try the [Partial Prerendering template and demo](https://vercel.com/templates/next.js/partial-prerendering-nextjs). It's important to note that this feature is experimental and not yet ready for production deployment.
+Note: To learn more about how Partial Pre-rendering can be configured, see the [Partial Pre-rendering (experimental) documentation](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering) or try the [Partial Pre-rendering template and demo](https://vercel.com/templates/next.js/partial-prerendering-nextjs). It's important to note that this feature is experimental and not yet ready for production deployment.
 
 ## Search & Pagination
 
@@ -448,7 +448,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 }
 ```
 
-## My Personal Thoughts & Annoyances /w React & NextJS as an Angular Developer
+## My Personal Thoughts & Annoyances /w React & Next.js as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
   - In my opinion html itself and aria rules for accessibility are plenty of complexity for a template file
