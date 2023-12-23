@@ -448,6 +448,74 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 }
 ```
 
+## Mutating Data
+
+### Server Actions
+
+React Server Actions allow you to run asynchronous code directly on the server.
+They eliminate the need to create API endpoints to mutate your data.
+Instead, you write asynchronous functions that execute on the server and can be invoked from your Client or Server Components.
+
+```tsx
+import { createInvoice } from '@/app/lib/actions';
+ 
+export default function Form({
+  customers,
+}: {
+  customers: customerField[];
+}) {
+  return (
+    <form action={createInvoice}>
+      // ...
+    </form>
+  )
+}
+```
+
+```tsx
+'use server';
+
+export async function createInvoice(formData: FormData) {
+  const rawFormData = {
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  };
+  const amountInCents = amount * 100;
+  const date = new Date().toISOString().split('T')[0];
+
+  await sql`
+        INSERT INTO invoices (customer_id, amount, status, date)
+        VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+    `;
+
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
+}
+```
+
+### Zod to validate form data
+
+```ts
+'use server';
+ 
+import { z } from 'zod';
+ 
+const FormSchema = z.object({
+  id: z.string(),
+  customerId: z.string(),
+  amount: z.coerce.number(),
+  status: z.enum(['pending', 'paid']),
+  date: z.string(),
+});
+ 
+const CreateInvoice = FormSchema.omit({ id: true, date: true });
+ 
+export async function createInvoice(formData: FormData) {
+  // ...
+}
+```
+
 ## My Personal Thoughts & Annoyances /w React & Next.js as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
