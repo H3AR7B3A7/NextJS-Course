@@ -458,17 +458,9 @@ Instead, you write asynchronous functions that execute on the server and can be 
 
 ```tsx
 import { createInvoice } from '@/app/lib/actions';
- 
-export default function Form({
-  customers,
-}: {
-  customers: customerField[];
-}) {
-  return (
-    <form action={createInvoice}>
-      // ...
-    </form>
-  )
+
+export default function Form({ customers }: { customers: customerField[] }) {
+  return <form action={createInvoice}>// ...</form>;
 }
 ```
 
@@ -498,9 +490,9 @@ export async function createInvoice(formData: FormData) {
 
 ```ts
 'use server';
- 
+
 import { z } from 'zod';
- 
+
 const FormSchema = z.object({
   id: z.string(),
   customerId: z.string(),
@@ -508,7 +500,7 @@ const FormSchema = z.object({
   status: z.enum(['pending', 'paid']),
   date: z.string(),
 });
- 
+
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function createInvoice(formData: FormData) {
@@ -520,6 +512,49 @@ export async function createInvoice(formData: FormData) {
   // ...
 }
 ```
+
+## Handling Errors
+
+Try-catches in the actions:
+
+```ts
+try {
+  await sql`
+      INSERT INTO invoices (customer_id, amount, status, date)
+      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+    `;
+} catch (error) {
+  return {
+    message: 'Database Error: Failed to Create Invoice.',
+  };
+}
+```
+
+The `error.tsx` file can be used to define a UI boundary for a route segment. It serves as a catch-all for unexpected errors and allows you to display a fallback UI to your users.
+
+To show an error UI to the user. Create a `not-found.tsx`:
+
+```tsx
+import { notFound } from 'next/navigation';
+
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
+  const [invoice, customers] = await Promise.all([
+    fetchInvoiceById(id),
+    fetchCustomers(),
+  ]);
+
+  if (!invoice) {
+    notFound();
+  }
+
+  // ...
+}
+```
+
+notFound will take precedence over error.tsx, so you can reach out for it when you want to handle more specific errors!
+
+_More on Error Handling: [here](https://nextjs.org/docs/app/building-your-application/routing/error-handling)._
 
 ## My Personal Thoughts & Annoyances /w React & Next.js as an Angular Developer
 
