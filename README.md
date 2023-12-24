@@ -556,6 +556,15 @@ notFound will take precedence over error.tsx, so you can reach out for it when y
 
 _More on Error Handling: [here](https://nextjs.org/docs/app/building-your-application/routing/error-handling)._
 
+## Improve Accessibility
+
+By default, Next.js includes the `eslint-plugin-jsx-a11y` plugin to help catch accessibility issues early.
+For example, this plugin warns if you have images without alt text, use the aria-\* and role attributes incorrectly, and more.
+
+> next lint
+
+_More on Accessibility: [here](https://web.dev/learn/accessibility/)._
+
 ## My Personal Thoughts & Annoyances /w React & Next.js as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
