@@ -565,6 +565,34 @@ For example, this plugin warns if you have images without alt text, use the aria
 
 _More on Accessibility: [here](https://web.dev/learn/accessibility/)._
 
+## Authentication
+
+- Install NextAuth.js:
+
+> npm install next-auth@beta
+
+- Generate a secret key for your application. This key is used to encrypt cookies, ensuring the security of user sessions:
+
+> openssl rand -base64 32
+
+Add your generated key to the AUTH_SECRET variable in `.env` file (and in deployment variables):
+
+```
+AUTH_SECRET=your-secret-key
+```
+
+Further instructions [here](https://nextjs.org/learn/dashboard-app/adding-authentication).
+
+Email:
+```
+user@nextmail.com
+```
+
+Password:
+```
+123456
+```
+
 ## My Personal Thoughts & Annoyances /w React & Next.js as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
