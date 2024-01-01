@@ -593,6 +593,10 @@ Password:
 123456
 ```
 
+## Metadata
+
+
+
 ## My Personal Thoughts & Annoyances /w React & Next.js as an Angular Developer
 
 - TSX and JSX files are pretty ugly, all the logic and syntax clutters the html (similar to libraries like Tailwind)
